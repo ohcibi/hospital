@@ -1,5 +1,3 @@
-app/*
-cakewww/*
-vendors/*
+app/tmp/*
 *.swp
 *.swo
