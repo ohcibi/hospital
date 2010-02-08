@@ -1,4 +1,5 @@
 <?php
+session_start();
 uses('db');
 uses('db_config');
 $DbConfig = new DbConfig();
@@ -6,6 +7,9 @@ $Db = new Db($DbConfig->db_config);
 $Db->connect();
 
 $url = explode('/', $_GET['url']);
+if (empty($url[0])) {
+    $url[0] = 'patients';
+}
 if (empty($url[1])) {
     $url[1] = 'index';
 }

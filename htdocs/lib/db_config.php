@@ -1,9 +1,9 @@
 <?php
 class DbConfig {
     var $db_config = array(
-        'username' => 'hospital',
-        'password' => 'yQiB0MwB',
-        'dbname' => 'hospital'
+        'username' => 'm1751141',
+        'password' => 'ErD8UwzF',
+        'dbname' => 'm1751141'
     );
 }
 ?>

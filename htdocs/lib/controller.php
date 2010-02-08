@@ -10,9 +10,19 @@ class Controller {
      */
     var $data = array();
 
-    function set($data = array()) {
-        foreach ($data as $key => $var) {
-            $this->viewVars[$key] = $var;
+    /**
+     * Array of all the params
+     */
+    var $params = array();
+
+    function set() {
+        $args = func_get_args();
+        if (is_array($args[0])) {
+            foreach ($args[0] as $key => $var) {
+                $this->viewVars[$key] = $var;
+            }
+        } elseif (is_string($args[0]) && isset($args[1])) {
+            $this->viewVars[$args[0]] = $args[1];
         }
     }
 
@@ -22,10 +32,25 @@ class Controller {
             return false;
         }
 
+        $globalParams = array(
+            'request' => array(
+                'controller' => strtolower($this->name()),
+                'action' => strtolower($action)
+            )
+        );
+
+
         call_user_func_array(array($this, $action), $params);
 
         $content_for_layout = $this->getViewContents($action, $this->viewVars);
         return $content_for_layout;
+    }
+
+    /**
+     * Returns the name of the controller
+     */
+    function name() {
+        return str_replace('Controller', '', get_class($this));
     }
 
     function renderLayout($content_for_layout = null) {
@@ -53,6 +78,28 @@ class Controller {
             return $content;
         }
         return false;
+    }
+
+    /**
+     * Redirect to specified url
+     */
+    function redirect($url) {
+        $url = str_replace(strtolower($this->name()) . '/', '', $url);
+        header('Location: ' . $url);
+    }
+
+    /**
+     * Sets Flash message
+     */
+    function setFlash($message, $class = null) {
+        $reqid = $_SERVER['UNIQUE_ID'];
+        $_SESSION['Flash'] = compact('message', 'class', 'reqid');
+    }
+
+    function __destruct() {
+        if ($_SESSION['Flash']['reqid'] != $_SERVER['UNIQUE_ID']) {
+            unset($_SESSION['Flash']);
+        }
     }
 }
 ?>

@@ -6,6 +6,17 @@
     </head>
     <body>
         <h1>Hospital</h1>
+        <?php if (!empty($_SESSION['Flash']['message'])): ?>
+            <?php if (!empty($_SESSION['Flash']['class'])): ?>
+                <div class="<?php echo $_SESSION['Flash']['class']; ?>">
+            <?php else: ?>
+                <div>
+            <?php endif; ?>
+            
+            <?php echo $_SESSION['Flash']['message']; ?>
+
+            </div>
+        <?php endif; ?>
         <?php echo $content_for_layout; ?>
     </body>
 </html>
