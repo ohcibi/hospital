@@ -33,6 +33,7 @@ class PatientsModel extends Model {
 
         $result = mysql_query($query) or trigger_error('MySQL ERROR (' . mysql_errno() . '): ' . mysql_error());
 
+        $results = array();
         while ($res = mysql_fetch_assoc($result)) {
             $results[] = $res;
         }

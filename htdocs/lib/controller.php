@@ -15,6 +15,10 @@ class Controller {
      */
     var $params = array();
 
+    /**
+     * Array of available helpers for the view
+     */
+    var $helpers = array();
     function set() {
         $args = func_get_args();
         if (is_array($args[0])) {
@@ -70,6 +74,12 @@ class Controller {
 
     function getFileContents($file, $varscope = array()) {
         if (is_file($file)) {
+            foreach ($this->helpers as $helper) {
+                uses('views/helpers/' . strtolower($helper));
+                $helper_varname = strtolower($helper);
+                $helper_name = $helper . 'Helper';
+                $$helper_varname = new $helper_name(); 
+            }
             extract($varscope);
             ob_start();
             include($file);

@@ -2,6 +2,8 @@
 class PatientsController extends Controller {
     var $name = 'Patients';
 
+    var $helpers = array('Html');
+
     function index() {
         $this->set('patients', $this->Patients->findAllWithRooms());
     }
@@ -23,3 +25,4 @@ class PatientsController extends Controller {
         $this->set(compact('rooms'));
     }
 }
+?>
