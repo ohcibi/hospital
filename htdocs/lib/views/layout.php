@@ -8,10 +8,10 @@
     <body>
         <h1>Hospital</h1>
         <ul id="menu">
-            <li><a href="patients">Patienten</a></li>
-            <li><a href="doctors">Ärzte</a></li>
-            <li><a href="diseases">Krankheiten</a></li>
-            <li><a href="stations">Stationen</a></li>
+            <li><?php echo $html->link('Patienten', array('controller' => 'patients', 'action' => 'index')); ?></li>
+            <li><?php echo $html->link('Ärzte', array('controller' => 'doctors', 'action' => 'index')); ?></li>
+            <li><?php echo $html->link('Krankheiten', array('controller' => 'diseases', 'action' => 'index')); ?></li>
+            <li><?php echo $html->link('Stationen', array('controller' => 'stations', 'action' => 'index')); ?></li>
         </ul>
         <?php if (!empty($_SESSION['Flash']['message'])): ?>
             <?php if (!empty($_SESSION['Flash']['class'])): ?>
