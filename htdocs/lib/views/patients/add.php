@@ -11,5 +11,5 @@
         <?php endforeach; ?>
     </select>
 </div>
-<div><input type="submit" value="Speichern" />
+<div><input type="submit" value="Speichern" /></div>
 </form>

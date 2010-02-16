@@ -7,7 +7,13 @@
         <tr>
             <td><?php echo $station['Stations']['id']; ?></td>
             <td><?php echo $station['Stations']['title']; ?></td>
-            <td><?php echo join(', ', $station['Rooms']); ?></td>
+            <td>
+            <?php if(!empty($station['Rooms'])): ?>
+                <?php echo join(', ', $station['Rooms']); ?>
+            <?php else: ?>
+                <em>Keine Räume</em>
+            <?php endif; ?>
+            </td>
             <td class="actions">
             <?php echo $html->link('Bearbeiten', array('controller' => 'stations', 'action' => 'edit', $station['Stations']['id'])); ?>, 
             <?php echo $html->link('Löschen', array('controller' => 'stations', 'action' => 'delete', $station['Stations']['id'])); ?>

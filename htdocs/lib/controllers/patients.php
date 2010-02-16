@@ -16,7 +16,6 @@ class PatientsController extends Controller {
             } else {
                 $this->setFlash('Patient hinzugefügt');
                 $this->redirect('patients/index');
-               // $this->redirect('patients/edit/' . $this->Patients->getLastInsertId());
             }
         }
 

@@ -22,6 +22,7 @@ $modelName = ucfirst($model) . 'Model';
 uses('model');
 uses('controller');
 uses('view');
+uses('views/helpers/helper');
 
 if (!file_exists(CORE_LIB_PATH . 'controllers/' . $controller . '.php')) {
     trigger_error('Missing Controller file for <em>' . $controllerName . '</em>', E_USER_ERROR);

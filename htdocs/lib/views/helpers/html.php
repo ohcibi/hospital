@@ -1,16 +1,7 @@
 <?php
-class HtmlHelper {
-
+class HtmlHelper extends Helper {
     function link($text, $url = array(), $attributes = array()) {
-        $webroot = preg_replace('#([^/])$#', '$1/', dirname($_SERVER['SCRIPT_NAME']));
-
-        if (empty($url) || (empty($url['controller']) && empty($url['action']))) {
-            $url = $text;
-        }
-
-        if (!empty($url['controller']) && !empty($url['action'])) {
-            $url = $webroot . $url['controller'] . '/' . $url['action'];
-        }
+        $url = $this->url($text, $url);
 
         $arrStrAttributes = array();
         foreach ($attributes as $key => $value) {
@@ -25,4 +16,17 @@ class HtmlHelper {
         
         return '<a href="' . $url . '"' . $strAttributes . '>' . $text . '</a>'; 
     }
+
+    function form($options = array()) {
+        $defaults = array(
+            'url' => array()
+        );
+        $options = array_merge($defaults, $options);
+        extract($options);
+
+        $url = $this->url(null, $url);
+
+        return '<form action="' . $url . '" method="post">';
+    }
 }
+?>

@@ -46,10 +46,27 @@ class Model {
         $values = array_map('addnormalticks', $values);
 
         $query = "INSERT INTO `" . $tablename . "` (" . join(', ', $keys) . ") VALUES (" . join(', ', $values) . ")";
-        mysql_query($query) or die(__FILE__ . ':' . __LINE__ . ' ' . mysql_error() . "<br />\n" . $query);
+        $success = mysql_query($query);
+        if (!$success) {
+            trigger_error(__FILE__ . ':' . __LINE__ . ' ' . mysql_error() . "<br />\n" . $query, E_USER_WARNING);
+            return false;
+        }
+        return true;
     }
 
     function selectFields($fields = array()) {
+        $selectFields = $this->schema;
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                if (!strstr($field, '.')) {
+                    $field = $this->name() . '.' . $field;
+                }
+                $selectFields[] = $field;
+            }
+
+            $fields = array_intersect($this->schema, $selectFields);
+        }
+
         reset($fields);
 
         while (list($key, $value) = each($fields)) {
@@ -103,6 +120,18 @@ class Model {
      */
     function getLastInsertId() {
         return mysql_insert_id();
+    }
+
+    function normalize($data) {
+        $results = array();
+        foreach($data as $key => $value) {
+            foreach ($value as $k => $v) {
+                $k = explode('.', $k);
+                $results[$key][$k[0]][$k[1]] = $v;
+            }
+        }
+
+        return $results;
     }
 }
 ?>
