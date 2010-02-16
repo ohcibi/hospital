@@ -1,13 +1,12 @@
 <?php if (!empty($patients)): ?>
     <table>
         <tr>
-            <th>ID</th><th>Vorname</th><th>Name</th><th>Raum</th><th class="actions">Actions</th>
+            <th>Vorname</th><th>Name</th><th>Raum</th><th class="actions">Actions</th>
         </tr>
     <?php foreach($patients as $patient): ?>
         <tr>
             <td><?php echo $patient['Patients']['id']; ?></td>
             <td><?php echo $patient['Patients']['first_name']; ?></td>
-            <td><?php echo $patient['Patients']['last_name']; ?></td>
             <td><?php echo $patient['Rooms']['title']; ?></td>
             <td class="actions">
             <?php echo $html->link('Bearbeiten', array('controller' => 'patients', 'action' => 'edit', $patient['Patients']['id'])); ?>, 

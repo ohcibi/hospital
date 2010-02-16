@@ -7,6 +7,6 @@
 
 <div class="actions">
     <ul>
-        <li><a href="/special_fields">Spezialgebiete anzeigen</a></li>
+    <li><?php echo $html->link('Spezialgebiete anzeigen', array('controller' => 'specials', 'action' => 'index')); ?></li>
     </ul>
 </div>
