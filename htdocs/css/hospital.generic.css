@@ -73,3 +73,23 @@ div#content ul.actions a {
 div#content ul.actions a:hover {
     background:#eed;
 }
+
+table {
+    width:100%;
+}
+td.actions, th.actions {
+    text-align:right;
+}
+td.actions ul {
+    list-style-type:none;
+}
+td.actions ul a {
+    text-decoration:none;
+    color:#003;
+    font-weight:bold;
+}
+td.actions ul a:hover {
+    color:#008;
+    text-decoration:underline;
+}
+

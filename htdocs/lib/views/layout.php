@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Hospital</title>
-        <style type="text/css">@import url(/css/hospital.generic.css);</style>
+        <?php echo $html->css('hospital.generic'); ?>
     </head>
     <body>
         <h1>Hospital</h1>

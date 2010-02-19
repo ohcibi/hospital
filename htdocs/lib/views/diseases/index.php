@@ -10,8 +10,10 @@
             <td><?php echo $disease['Diseases']['description']; ?></td>
             <td><?php echo join(', ', $disease['Symptoms']); ?></td>
             <td class="actions">
-            <?php echo $html->link('Bearbeiten', array('controller' => 'diseases', 'action' => 'edit', $disease['Diseases']['id'])); ?>, 
-            <?php echo $html->link('Löschen', array('controller' => 'diseases', 'action' => 'delete', $disease['Diseases']['id'])); ?>
+                <ul>
+                    <li><?php echo $html->link('Bearbeiten', array('controller' => 'diseases', 'action' => 'edit', $disease['Diseases']['id'])); ?></li>
+                    <li><?php echo $html->link('Löschen', array('controller' => 'diseases', 'action' => 'delete', $disease['Diseases']['id']), array(), sprintf('Sind Sie sicher, dass sie %s löschen wollen?', $disease['Diseases']['title'])); ?></li>
+                </ul>
             </td>
         </tr>
     <?php endforeach; ?>
@@ -23,4 +25,5 @@
 <ul class="actions">
     <li><?php echo $html->link('Krankheit hinzufügen', array('controller' => 'diseases', 'action' => 'add')); ?></li>
     <li><?php echo $html->link('Symptom hinzufügen', array('controller' => 'symptoms', 'action' => 'add')); ?></li>
+    <li><?php echo $html->link('Symptome anzeigen', array('controller' => 'symptoms', 'action' => 'index')); ?></li>
 </ul>

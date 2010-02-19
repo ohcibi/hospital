@@ -8,7 +8,7 @@ class PatientsModel extends Model {
         $options = array_merge($defaults, $options);
         extract($options);
 
-        $fields[] = array('Rooms.id', 'Rooms.title');
+        $fields = array_merge($fields, array('Patients.id', 'Patients.first_name', 'Patients.last_name', 'Rooms.id', 'Rooms.title'));
         $fields = $this->selectFields(array_unique($fields));
 
 

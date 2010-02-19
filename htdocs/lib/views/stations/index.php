@@ -8,8 +8,8 @@
             <td><?php echo $station['Stations']['id']; ?></td>
             <td><?php echo $station['Stations']['title']; ?></td>
             <td>
-            <?php if(!empty($station['Rooms'])): ?>
-                <?php echo join(', ', $station['Rooms']); ?>
+            <?php if(!empty($station['Rooms'][0]['id'])): ?>
+                <?php echo count($station['Rooms']); ?>
             <?php else: ?>
                 <em>Keine Räume</em>
             <?php endif; ?>
@@ -18,7 +18,7 @@
             <ul>
                 <li><?php echo $html->link('Raum hinzufügen', array('controller' => 'rooms', 'action' => 'add', $station['Stations']['id'])); ?></li>
                 <li><?php echo $html->link('Bearbeiten', array('controller' => 'stations', 'action' => 'edit', $station['Stations']['id'])); ?></li>
-                <li><?php echo $html->link('Löschen', array('controller' => 'stations', 'action' => 'delete', $station['Stations']['id'])); ?></li>
+                <li><?php echo $html->link('Löschen', array('controller' => 'stations', 'action' => 'delete', $station['Stations']['id']), array(), sprintf('Sicher, dass sie Station %s löschen wollen?', $station['Stations']['title'])); ?></li>
             </ul>
             </td>
         </tr>
@@ -30,5 +30,4 @@
 
 <ul class="actions">
     <li><?php echo $html->link('Station hinzufügen', array('controller' => 'stations', 'action' => 'add')); ?></li>
-    <li><?php echo $html->link('Raum hinzufügen', array('controller' => 'rooms', 'action' => 'add')); ?></li>
 </ul>

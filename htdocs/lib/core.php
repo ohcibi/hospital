@@ -6,16 +6,17 @@ $DbConfig = new DbConfig();
 $Db = new Db($DbConfig->db_config);
 $Db->connect();
 
-$url = explode('/', $_GET['url']);
-if (empty($url[0])) {
-    $url[0] = 'patients';
+$url = $_GET;
+if (empty($url['controller'])) {
+    $url['controller'] = 'patients';
 }
-if (empty($url[1])) {
-    $url[1] = 'index';
+if (empty($url['action'])) {
+    $url['action'] = 'index';
 }
 
-$controller = $model = array_shift($url);
-$action = array_shift($url);
+$controller = $model = $url['controller'];
+$action = $url['action'];
+unset($url['action'], $url['controller']);
 $controllerName = ucfirst($controller) . 'Controller';
 $modelName = ucfirst($model) . 'Model';
 
@@ -45,7 +46,7 @@ if (!empty($_POST)) {
 
 $content_for_layout = $currentController->renderAction($action, $url);
 
-if (false === $output) {
+if (false === $content_for_layout) {
     trigger_error('Missing Action: <strong>' . $action . '</strong> in <em>' . $controllerName . '</em>', E_USER_WARNING);
 }
 

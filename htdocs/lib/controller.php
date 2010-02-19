@@ -1,6 +1,10 @@
 <?php
 class Controller {
     /**
+     * id of current request
+     */
+    var $requestid = null;
+    /**
      * Array that holds all the variables, that should be available in view.
      */
     var $viewVars = array();
@@ -19,6 +23,10 @@ class Controller {
      * Array of available helpers for the view
      */
     var $helpers = array();
+
+    function __construct() {
+        $this->requestid = uuid();
+    }
     function set() {
         $args = func_get_args();
         if (is_array($args[0])) {
@@ -64,7 +72,7 @@ class Controller {
     }
 
     function getViewContents($view, $varscope = array()) {
-        $viewFile = CORE_LIB_PATH . 'views/' . strtolower($this->name) . '/' . $view . '.php';
+        $viewFile = CORE_LIB_PATH . 'views/' . strtolower($this->name()) . '/' . $view . '.php';
         return $this->getFileContents($viewFile, $varscope);
     }
     function getLayoutContents($varscope = array()) {
@@ -79,6 +87,10 @@ class Controller {
                 $helper_varname = strtolower($helper);
                 $helper_name = $helper . 'Helper';
                 $$helper_varname = new $helper_name(); 
+                $params = array(
+                    'controller' => $this->name()
+                );
+                $$helper_varname->params = $params;
             }
             extract($varscope);
             ob_start();
@@ -94,20 +106,23 @@ class Controller {
      * Redirect to specified url
      */
     function redirect($url) {
-        $url = str_replace(strtolower($this->name()) . '/', '', $url);
+        if (is_array($url)) {
+            $url = url(null, $url);
+        }
         header('Location: ' . $url);
+        exit();
     }
 
     /**
      * Sets Flash message
      */
     function setFlash($message, $class = null) {
-        $reqid = $_SERVER['UNIQUE_ID'];
+        $reqid = $this->requestid;
         $_SESSION['Flash'] = compact('message', 'class', 'reqid');
     }
 
     function __destruct() {
-        if ($_SESSION['Flash']['reqid'] != $_SERVER['UNIQUE_ID']) {
+        if (!empty($_SESSION['Flash']['reqid']) && $_SESSION['Flash']['reqid'] != $this->requestid) {
             unset($_SESSION['Flash']);
         }
     }
