@@ -75,7 +75,26 @@ div#content ul.actions a:hover {
 }
 
 table {
-    width:100%;
+    float:left;
+    width:70%;
+    border-collapse:collapse;
+}
+tr {
+    background:#ccb;
+}
+tr:first-child, tr:first-child:hover {
+    background:none;
+}
+tr:nth-child(even) {
+    background:#ddc;
+}
+tr:hover {
+    background:#eed;
+}
+td {
+    margin:0;
+    padding:3px;
+    border:1px solid #003;
 }
 td.actions, th.actions {
     text-align:right;

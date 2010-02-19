@@ -5,21 +5,28 @@ class PatientsModel extends Model {
         $defaults = array(
             'fields' => array(),
             'order' => array(),
+            'conditions' => array(),
         );
         $options = array_merge($defaults, $options);
         extract($options);
 
-        $fields = array_merge($fields, array('Patients.id', 'Patients.first_name', 'Patients.last_name', 'Patients.birth_day', 'Rooms.id', 'Rooms.title'));
+        $fields = array_merge($fields, array('Patients.id', 'Patients.first_name', 'Patients.last_name', 'Patients.birth_day', 'Rooms.id', 'Rooms.title', 'Stations.title'));
 
-        $joins = array(
+        $joins = array_merge($joins, array(
             array(
                 'table' => 'rooms',
                 'alias' => 'Rooms',
                 'type' => 'inner',
-                'conditions' => array('Rooms.id = Patients.id')
+                'conditions' => array('Rooms.id = Patients.rooms_id')
+            ),
+            array(
+                'table' => 'stations',
+                'alias' => 'Stations',
+                'type' => 'inner',
+                'conditions' => array('Stations.id = Rooms.stations_id')
             )
-        );
-        $query = $this->makeQuery(compact('fields', 'order', 'joins'));
+        ));
+        $query = $this->makeQuery(compact('fields', 'order', 'joins', 'conditions'));
 
         return $this->query($query);
     }

@@ -330,6 +330,7 @@ class Model {
             }
 
             $key = addbackticks($key);
+            $value = addnormalticks($value);
 
             $cond[] = $key . ' ' . $op . ' ' . $value;
         }

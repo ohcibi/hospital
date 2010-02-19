@@ -1,5 +1,5 @@
 <h2>Diagnosen von <?php echo $patient['Patients']['first_name'] . ' ' . $patient['Patients']['last_name']; ?></h2>
-<?php if (!empty($patient['Diagnoses'])): ?>
+<?php if (!empty($patient['Diagnoses'][0]['Diagnoses']['created'])): ?>
     <table>
         <tr><th>Arzt</th><th>Krankheit</th><th>Diagnosedatum</th><th class="actions">Aktionen</th></tr>
         <?php foreach($patient['Diagnoses'] as $diagnose): ?>

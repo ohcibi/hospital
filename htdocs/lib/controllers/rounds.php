@@ -20,10 +20,20 @@ class RoundsController extends Controller {
         }
         if (!empty($this->data)) {
             $this->data['Rounds']['created'] = date('Y-m-d');
-            if ($this->Rounds->save($this->data)) {
-                $this->setFlash('Visite hinzugefügt');
+            if (is_int($this->data['Rounds']['temperature']) &&
+                is_int($this->data['Rounds']['weight']) &&
+                is_int($this->data['Rounds']['pulse']) &&
+                is_int($this->data['Rounds']['blood_pressure_systolic']) &&
+                is_int($this->data['Rounds']['blood_pressure_diastolic'])
+            ) {
+                if ($this->Rounds->save($this->data)) {
+                    $this->setFlash('Visite hinzugefügt');
+                } else {
+                    $this->setFlash('Fehler beim Speichern der Visite.', 'error');
+                }
             } else {
-                $this->setFlash('Fehler beim Speichern der Visite.', 'error');
+                $this->setFlash('Bitte nur ganze Zahlen eingeben', 'error');
+                $this->redirect(array('controller' => 'rounds', 'action' => 'add', $patientid));
             }
             $this->redirect(array('controller' => 'rounds', 'action' => 'index', $patientid));
         }

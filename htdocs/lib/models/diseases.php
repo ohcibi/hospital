@@ -28,6 +28,9 @@ class DiseasesModel extends Model {
         $order = 'Diseases.id';
 
         $results = $this->findAll(compact('order', 'joins', 'fields', 'conditions'));
+        if ($results === false) {
+            return false;
+        }
 
         $diseases = array();
         reset($results);

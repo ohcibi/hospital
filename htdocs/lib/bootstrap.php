@@ -21,7 +21,13 @@ function debug($var) {
 function addbackticks($value) {
     if (strstr($value, '.')) {
         $value = explode('.', $value);
-        return addbackticks($value[0]) . '.' . addbackticks($value[1]);
+        if (strstr($value[1], ' ')) {
+            $value[1] = explode(' ', $value[1]);
+            $value[1] = addbackticks($value[1][0]) . ' ' . $value[1][1];
+        } else {
+            $value[1] = addbackticks($value[1]);
+        }
+        return addbackticks($value[0]) . '.' . $value[1];
     }
 
     return '`' . $value . '`';
