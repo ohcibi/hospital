@@ -55,7 +55,9 @@ function url($text, $url = null) {
     if (is_array($url)) {
         $count = count($url);
         for ($i = 0; $i < $count; $i++) {
-            $strUrl .= '&' . $i . '=' . $url[$i];
+            if (null !== $url[$i]) {
+                $strUrl .= '&' . $i . '=' . $url[$i];
+            }
         }
     }
 

@@ -92,7 +92,9 @@ class Model {
         $options = array_merge($defaults, $options);
         extract($options);
 
-        $conditions[$this->name() . '.id'] = $id;
+        if (empty($conditions)) {
+            $conditions[$this->name() . '.id'] = $id;
+        }
 
         try {
             $query = $this->makeQuery(compact('conditions'), 'delete');
@@ -161,10 +163,14 @@ class Model {
 
         return $this->query($query);
     }
-    function findList() {
-        $fields = array($this->name() . '.id', $this->name() . '.title');
-        $fields = $this->selectFields($fields);
-        $query = 'SELECT ' . $fields . ' FROM ' . addbackticks(strtolower($this->name())) . ' AS ' . addbackticks($this->name());
+    function findList($options = array()) {
+        $defaults = array(
+            'fields' => array($this->name() . '.id', $this->name() . '.title'),
+        );
+        $options = array_merge($defaults, $options);
+        extract($options);
+
+        $query = $this->makeQuery(compact('fields'));
 
         return $this->query($query);
     }
@@ -174,7 +180,9 @@ class Model {
      */
     function findFirst($options = array()) {
         $defaults = array(
-            'conditions' => array()
+            'conditions' => array(),
+            'fields' => array(),
+            'joins' => array(),
         );
         $options = array_merge($defaults, $options);
         extract($options);
@@ -182,7 +190,7 @@ class Model {
         $limit = 1;
 
         try {
-            $query = $this->makeQuery(compact('conditions', 'limit'));
+            $query = $this->makeQuery(compact('conditions', 'limit', 'fields', 'joins'));
         } catch(InvalidArgumentException $e) {
             trigger_error("Invalid statement type: <br />\n" . nl2br($e->getTraceAsString()), E_USER_ERROR);
         }

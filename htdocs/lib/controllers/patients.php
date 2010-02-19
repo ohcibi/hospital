@@ -4,8 +4,16 @@ class PatientsController extends Controller {
 
     var $helpers = array('Html');
 
-    function index() {
-        $this->set('patients', $this->Patients->findAllWithRooms());
+    function index($sort = null, $filter = null) {
+        if (!in_array($sort, array('first_name', 'last_name', 'birth_day'))) {
+            $sort = null;
+        }
+        $options = array();
+        if (null !== $sort) {
+            $options = array('order' => 'Patients.' . $sort);
+        }
+        $patients = $this->Patients->findAllWithRooms($options);
+        $this->set(compact('patients', 'filter'));
     }
 
     function add() {
